@@ -11,10 +11,23 @@ using System.Collections;
 
 public class PhysicalButtonCollisionCallback : MonoBehaviour {
 
-  public PhysicalButton toCall;
+    public float spinValue;
+    public float spinValueDelta;
 
-  void OnCollisionEnter(Collision coll) {
-    toCall.ReceiveCollisionEnter(coll, GetComponentInChildren<Collider>());
-  }
+
+  //void OnCollisionEnter(Collision coll) {
+  //      // When something collides with this object...
+  //      // Run the code in this function
+  //      HingeJoint hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
+  //      float spinValue = hinge.angle;
+  //      Debug.Log(spinValue);
+  //  }
+
+    void Update()
+    {
+       HingeJoint hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
+       float spinValue = hinge.angle;
+       Debug.Log(spinValue);
+    }
 
 }
