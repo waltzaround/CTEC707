@@ -7,6 +7,7 @@ public class RotationLogger : MonoBehaviour {
     public GameObject textgameobject;//set this is inspector or by script, maybe GameObject.Find or something, idk.
     private HingeJoint hinge;
     private float prevAngle;
+    public float delta;
 
     // Use this for initialization
     void Start () {
@@ -18,11 +19,11 @@ public class RotationLogger : MonoBehaviour {
     }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         float angle = hinge.angle;
 
-        float delta = angle - prevAngle;
+        delta = angle - prevAngle;
         if (delta > 180) { delta -= 360; }
         if (delta < -180) { delta += 360; }
         Debug.Log(delta);
