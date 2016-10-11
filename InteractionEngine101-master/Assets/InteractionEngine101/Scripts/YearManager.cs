@@ -4,18 +4,20 @@ using System.Collections;
 public class YearManager : MonoBehaviour {
     public float year;
     public float currentYear = 2000f;
+    public RotationLogger dead;
 	// Use this for initialization
 	void Start () {
-        GameObject theDelta = GameObject.Find("CurrentValue");
-        RotationLogger rotationLogger = theDelta.GetComponent<RotationLogger>();
+        GameObject d = GameObject.Find("TestButton");
+         RotationLogger dead = d.GetComponent<RotationLogger>();
+
 
 
     }
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log("potato");
+        Debug.Log(currentYear);
 
-    //    currentYear = (currentYear - rotationLogger.delta);
+        currentYear += dead.delta;
     }
 }
