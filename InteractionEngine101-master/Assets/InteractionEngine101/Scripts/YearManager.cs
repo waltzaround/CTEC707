@@ -16,8 +16,8 @@ public class YearManager : MonoBehaviour {
 	
 	// Update is called once per frame
 	void Update () {
-        Debug.Log(currentYear);
+     //   Debug.Log(currentYear);
 
-        currentYear += dead.delta;
+   
     }
 }

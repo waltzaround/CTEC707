@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
+using System;
 
 public class RotationLogger : MonoBehaviour {
 
@@ -9,13 +10,13 @@ public class RotationLogger : MonoBehaviour {
     private float prevAngle;
     public float delta;
 
+    public double year;
+
     // Use this for initialization
     void Start () {
-
-
         hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
         prevAngle = hinge.angle;
-
+        year = 2000;
     }
 
     // Update is called once per frame
@@ -27,19 +28,30 @@ public class RotationLogger : MonoBehaviour {
         if (delta > 180) { delta -= 360; }
         if (delta < -180) { delta += 360; }
         Debug.Log(delta);
-
         prevAngle = angle;
-/*
-        Canvas canvas = gameObject.GetComponent(typeof(Canvas)) as Canvas;
 
-        Text text = gameObject.GetComponent(typeof(Text)) as Text;
-        hinge.angle.ToString() = text;
+        // supahax
+        year += delta;
+
+        // haxx
+        GameObject currValue = GameObject.Find("CurrentValue");
+        Text textDisplay = currValue.GetComponent("Text") as Text;
+        textDisplay.text = "" + (int) year;
+        
+        // This is where we adjust
+
+        //Debug.Log(currentYear);
+        /*
+                Canvas canvas = gameObject.GetComponent(typeof(Canvas)) as Canvas;
+
+                Text text = gameObject.GetComponent(typeof(Text)) as Text;
+                hinge.angle.ToString() = text;
 
 
 
-        var weightfield = GameObject.Find("CurrentValue").GetComponent("TextMesh");
-        weightfield.text = totalWeight;
-*/
+                var weightfield = GameObject.Find("CurrentValue").GetComponent("TextMesh");
+                weightfield.text = totalWeight;
+        */
     }
 
 
