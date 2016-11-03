@@ -8,26 +8,31 @@
 
 using UnityEngine;
 using System.Collections;
+using System;
 
 public class PhysicalButtonCollisionCallback : MonoBehaviour {
 
     public float spinValue;
     public float spinValueDelta;
+    private bool havePressed = false;
 
+    void OnCollisionEnter(Collision coll) {
+        if (!havePressed)
+        {
+            havePressed = true;
+            DateTime start = System.DateTime.Now;
+            var button = GameObject.Find("TestButton") as GameObject;
+            var rotationLogger = button.GetComponent(typeof(RotationLogger)) as RotationLogger;
+            rotationLogger.timingStarted = true;
+            rotationLogger.timingStart = start;
+            Debug.Log("Button Pushed, Timing Start");
 
-  //void OnCollisionEnter(Collision coll) {
-  //      // When something collides with this object...
-  //      // Run the code in this function
-  //      HingeJoint hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
-  //      float spinValue = hinge.angle;
-  //      Debug.Log(spinValue);
-  //  }
+            
+        }
+    }
 
     void Update()
     {
-       HingeJoint hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
-       float spinValue = hinge.angle;
-       Debug.Log(spinValue);
     }
 
 }

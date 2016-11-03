@@ -10,13 +10,28 @@ public class RotationLogger : MonoBehaviour {
     private float prevAngle;
     public float delta;
 
+    public bool timingStarted = false;
+    public DateTime timingStart;
+
+    public bool hasTargetValue = false;
     public double year;
+    public int targetYear;
+    const int threshHold = 20;
+    public int framesMatched = 0;
+
+    public GameObject scoreboard;
 
     // Use this for initialization
     void Start () {
+        // Supa Hax
+        var yourTime = GameObject.Find("YourTimeBoard");
+        scoreboard = yourTime;
+        yourTime.SetActive(false);
+
         hinge = gameObject.GetComponent(typeof(HingeJoint)) as HingeJoint;
         prevAngle = hinge.angle;
         year = 2000;
+        targetYear = 1962;
     }
 
     // Update is called once per frame
@@ -27,31 +42,47 @@ public class RotationLogger : MonoBehaviour {
         delta = angle - prevAngle;
         if (delta > 180) { delta -= 360; }
         if (delta < -180) { delta += 360; }
-        Debug.Log(delta);
+        
+        
         prevAngle = angle;
 
         // supahax
-        year += delta;
+        const double scale = 0.05;
+        double transformedDelta = delta * scale;
+        year += transformedDelta;
 
         // haxx
         GameObject currValue = GameObject.Find("CurrentValue");
         Text textDisplay = currValue.GetComponent("Text") as Text;
         textDisplay.text = "" + (int) year;
         
-        // This is where we adjust
+        if (!timingStarted || hasTargetValue)
+        {
+            return;
+        }
 
-        //Debug.Log(currentYear);
-        /*
-                Canvas canvas = gameObject.GetComponent(typeof(Canvas)) as Canvas;
+        if ((int)year == targetYear)
+        {
+            framesMatched += 1;
+            if (framesMatched > threshHold)
+            {
+                DateTime now = DateTime.Now;
+                TimeSpan diff = now.Subtract(timingStart);
+                Debug.Log(diff.TotalMilliseconds);
+                hasTargetValue = true;
 
-                Text text = gameObject.GetComponent(typeof(Text)) as Text;
-                hinge.angle.ToString() = text;
+                scoreboard.SetActive(true);
 
-
-
-                var weightfield = GameObject.Find("CurrentValue").GetComponent("TextMesh");
-                weightfield.text = totalWeight;
-        */
+                Text display = GameObject.Find("UserTimeDisplay").GetComponent("Text") as Text;
+                string displayText = "" + Math.Round(diff.TotalMilliseconds / 1000.0, 2) + " Seconds";
+                display.text = displayText;
+                
+            }
+        }
+        else
+        {
+            framesMatched = 0;
+        }
     }
 
 

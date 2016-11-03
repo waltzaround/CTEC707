@@ -8,10 +8,7 @@ public class YearManager : MonoBehaviour {
 	// Use this for initialization
 	void Start () {
         GameObject d = GameObject.Find("TestButton");
-         RotationLogger dead = d.GetComponent<RotationLogger>();
-
-
-
+        RotationLogger dead = d.GetComponent<RotationLogger>();
     }
 	
 	// Update is called once per frame
